@@ -17,7 +17,15 @@ pub const TARGET_TEMP_CRITICAL: i32 = 480;
 pub const PID_KP: f32 = 0.008;
 pub const PID_KI: f32 = 0.0005;
 pub const PID_KD: f32 = 0.02;
+pub const PID_KP_MIN: f32 = 0.001;
+pub const PID_KP_MAX: f32 = 0.02;
+pub const PID_KI_MIN: f32 = 0.0001;
+pub const PID_KI_MAX: f32 = 0.002;
+pub const PID_KD_MIN: f32 = 0.001;
+pub const PID_KD_MAX: f32 = 0.05;
 pub const PID_INTEGRAL_LIMIT: f32 = 100.0;
+pub const PID_DEADBAND_RAW: f32 = 30.0; // 3.0C hysteresis below target before throttling
+pub const COOLING_FLOOR: f32 = 0.02; // below this intensity, force full release
 
 // ============================================================================
 // SYSTEM CONSTANTS
@@ -51,6 +59,22 @@ pub const STATE_DOWNGRADE_GUARD_SECS: u64 = 120;
 pub const LOG_RATE_LIMIT_NORMAL_SECS: u64 = 15;
 pub const PREDICTION_HORIZON_SECS: u64 = 45;
 pub const PREDICTION_MIN_SAMPLES: usize = 5;
+pub const PREDICT_HISTORY: usize = 60;
+pub const PREDICT_MIN_SAMPLES: usize = 5;
+pub const PREDICT_AVG_WINDOW: usize = 8;
+pub const PREDICT_LEARNING_RATE: f32 = 0.01;
+pub const PREDICT_DAMP: f32 = 0.01;
+pub const PREDICT_BIAS_WEIGHT: f32 = 0.5;
+pub const PREDICT_BIAS_HORIZON_SECS: u64 = 45;
+pub const PREDICT_STATS_LOG_INTERVAL: usize = 50;
+pub const SOC_TEMP_BLEND: f32 = 0.5; // blend of leading SoC-zone temp into control temp
+
+// DVFSRC actuation
+pub const DVFSRC_SYSFS_PATH: &str = "/sys/kernel/helio-dvfsrc";
+pub const DVFSRC_FLOOR: f32 = 0.05; // below this intensity, release (OPP 0)
+pub const PROP_ACTUATOR_MODE: &str = "persist.sys.rianixia.actuator";
+pub const ACTUATOR_MODE_DVFSRC: &str = "dvfsrc";
+pub const ACTUATOR_MODE_SOFT: &str = "soft";
 pub const ANOMALY_TEMP_JUMP_THRESHOLD: i32 = 100;
 pub const GRADIENT_EMA_ALPHA: f32 = 0.2;
 pub const GRADIENT_HIGH_SUSTAINED_SECS: u64 = 30;
